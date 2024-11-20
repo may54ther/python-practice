@@ -1,4 +1,4 @@
-import os, shutil
+﻿import os, shutil
 
 file_name = 'appshields.txt'
 

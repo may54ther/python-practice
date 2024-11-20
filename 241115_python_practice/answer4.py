@@ -1,4 +1,4 @@
-import os, subprocess
+﻿import os, subprocess
 
 
 file_name = 'appshields.txt'
