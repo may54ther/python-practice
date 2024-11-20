@@ -1,6 +1,6 @@
 from flask import request, render_template, flash, redirect, url_for
-from urllib.parse import urlsplit
 from flask_login import current_user, login_user, logout_user, login_required
+from urllib.parse import urlsplit
 import sqlalchemy as sa
 from app import app, db
 from app.models import User
