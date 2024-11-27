@@ -1,11 +1,13 @@
 from datetime import datetime, timezone
-from flask import request, render_template, flash, redirect, url_for
-from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
+
 import sqlalchemy as sa
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+
 from app import app, db
+from app.forms import EditProfileForm, LoginForm, RegistrationForm
 from app.models import User
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
 
 
 @app.before_request
@@ -62,7 +64,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash("Congratualtions, you are now a registered user!")
+        flash("Congratulations, you are now a registered user!")
         return redirect(url_for("login"))
     return render_template("register.html", title="Register", form=form)
 
@@ -81,7 +83,7 @@ def user(username):
 @app.route("/edit_profile", methods=["GET", "POST"])
 @login_required
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
