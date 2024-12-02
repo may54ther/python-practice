@@ -14,4 +14,5 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     ADMINS = ["kim.ahyeon@ahope.co.kr"]
+    LANGUAGES = ["en", "ko", "ja"]
     POSTS_PER_PAGE = 25
