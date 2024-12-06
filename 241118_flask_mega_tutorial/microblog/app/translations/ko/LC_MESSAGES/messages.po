@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-02 12:32+0900\n"
+"POT-Creation-Date: 2024-12-06 11:19+0900\n"
 "PO-Revision-Date: 2024-12-02 12:34+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -34,7 +34,7 @@ msgstr "비밀번호"
 msgid "Remember Me"
 msgstr "로그인 상태 유지"
 
-#: app/forms.py:16 app/routes.py:97 app/templates/login.html:4
+#: app/forms.py:16 app/routes.py:103 app/templates/login.html:4
 msgid "Sign In"
 msgstr "로그인"
 
@@ -46,7 +46,7 @@ msgstr "이메일"
 msgid "Repeat Password"
 msgstr "비밀번호 확인"
 
-#: app/forms.py:26 app/routes.py:118 app/templates/register.html:4
+#: app/forms.py:26 app/routes.py:124 app/templates/register.html:4
 msgid "Register"
 msgstr "가입"
 
@@ -72,74 +72,82 @@ msgstr "제출"
 
 #: app/forms.py:76
 msgid "Say something"
-msgstr "무언가 말해주세요"
+msgstr "무언가 말해주세요."
 
-#: app/routes.py:40
+#: app/routes.py:46
 msgid "Your post is now live!"
 msgstr "게시물이 게시되었습니다!"
 
-#: app/routes.py:53 app/templates/base.html:26
+#: app/routes.py:59 app/templates/base.html:26
 msgid "Home"
 msgstr "홈"
 
-#: app/routes.py:73 app/templates/base.html:29
+#: app/routes.py:79 app/templates/base.html:29
 msgid "Explore"
 msgstr "탐색"
 
-#: app/routes.py:90
+#: app/routes.py:96
 msgid "Invalid username or password"
 msgstr "잘못된 사용자명 또는 비밀번호"
 
-#: app/routes.py:116
+#: app/routes.py:122
 msgid "Congratulations, you are now a registered user!"
 msgstr "축하합니다, 이제 등록된 사용자입니다!"
 
-#: app/routes.py:130
+#: app/routes.py:136
 msgid "Check your email for the instructions to reset your password"
 msgstr "이메일을 확인하여 비밀번호 재설정 방법을 확인하세요."
 
-#: app/routes.py:133 app/templates/reset_password_request.html:4
+#: app/routes.py:139 app/templates/reset_password_request.html:4
 msgid "Reset Password"
 msgstr "비밀번호 재설정"
 
-#: app/routes.py:148
+#: app/routes.py:154
 msgid "Your password has been reset."
 msgstr "비밀번호가 재설정되었습니다."
 
-#: app/routes.py:191
+#: app/routes.py:197
 msgid "Your changes have been saved."
 msgstr "변경 사항이 저장되었습니다."
 
-#: app/routes.py:196 app/templates/edit_profile.html:4
+#: app/routes.py:202 app/templates/edit_profile.html:4
 msgid "Edit Profile"
 msgstr "프로필 수정"
 
-#: app/routes.py:206 app/routes.py:226
+#: app/routes.py:212 app/routes.py:232
 #, python-format
 msgid "User %(username)s not found."
 msgstr "사용자 %(username)s을(를) 찾을 수 없습니다."
 
-#: app/routes.py:209
+#: app/routes.py:215
 msgid "You cannot follow yourself!"
 msgstr "자신을 팔로우할 수 없습니다!"
 
-#: app/routes.py:213
+#: app/routes.py:219
 #, python-format
 msgid "You are following %(username)s!"
 msgstr "당신은 %(username)s을(를) 팔로우하고 있습니다!"
 
-#: app/routes.py:229
+#: app/routes.py:235
 msgid "You cannot unfollow yourself!"
 msgstr "자신을 팔로우 취소할 수 없습니다!"
 
-#: app/routes.py:233
+#: app/routes.py:239
 #, python-format
 msgid "You are not following %(username)s."
 msgstr "당신은 %(username)s을(를) 팔로우하고 있지 않습니다."
 
+#: app/translate.py:9
+msgid "Error: the translation service is not configured."
+msgstr ""
+
+#: app/translate.py:23
+msgid "Error: the translation service failed."
+msgstr ""
+
 #: app/templates/404.html:4
 msgid "File Not Found"
-msgstr "파일을 찾을 수 없습니다"
+msgstr "파일을 찾을 수 없습니다."
 
 #: app/templates/404.html:5 app/templates/500.html:6
 msgid "Back"
@@ -156,11 +164,15 @@ msgstr "불편을 끼쳐 드려 죄송합니다. 관리자에게 알림이 전�
 #: app/templates/_post.html:14
 #, python-format
 msgid "%(username)s said %(when)s"
-msgstr "%(username)s님이 %(when)s에 말했습니다"
+msgstr "%(username)s님이 %(when)s에 말했습니다."
+
+#: app/templates/_post.html:25
+msgid "Translate"
+msgstr ""
 
 #: app/templates/base.html:9
 msgid "Welcome to Microblog"
-msgstr "Microblog에 오신 것을 환영합니다"
+msgstr "Microblog에 오신 것을 환영합니다."
 
 #: app/templates/base.html:35
 msgid "Login"
@@ -213,7 +225,7 @@ msgstr "사용자"
 
 #: app/templates/user.html:11
 msgid "Last seen on"
-msgstr "마지막으로 본 시간"
+msgstr "최근 접속일"
 
 #: app/templates/user.html:13
 #, python-format
@@ -236,3 +248,4 @@ msgstr "팔로우"
 #: app/templates/user.html:27
 msgid "Unfollow"
 msgstr "팔로우 취소"
+
