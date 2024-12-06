@@ -8,8 +8,8 @@
         {{ field.label(class='form-label') }}
         {%- for item in field %}
         <div class="form-check{% if loop.last %} mb-3{% endif %}">
-            {{ item(class='form-check-input') }}
-            {{ item.label(class='form-check-label') }}
+        {{ item(class='form-check-input') }}
+        {{ item.label(class='form-check-label') }}
         </div>
         {%- endfor %}
     {%- elif field.type == 'SelectField' %}
@@ -19,9 +19,9 @@
     <div class="mb-3">
         {{ field.label(class='form-label') }}
         {% if autofocus %}
-            {{ field(class='form-control' + (' is-invalid' if field.errors else ''), autofocus=True) }}
+        {{ field(class='form-control' + (' is-invalid' if field.errors else ''), autofocus=True) }}
         {% else %}
-            {{ field(class='form-control' + (' is-invalid' if field.errors else '')) }}
+        {{ field(class='form-control' + (' is-invalid' if field.errors else '')) }}
         {% endif %}
         {%- for error in field.errors %}
         <div class="invalid-feedback">{{ error }}</div>
@@ -33,9 +33,9 @@
     <div class="mb-3">
         {{ field.label(class='form-label') }}
         {% if autofocus %}
-            {{ field(class='form-control' + (' is-invalid' if field.errors else ''), autofocus=True) }}
+        {{ field(class='form-control' + (' is-invalid' if field.errors else ''), autofocus=True) }}
         {% else %}
-            {{ field(class='form-control' + (' is-invalid' if field.errors else '')) }}
+        {{ field(class='form-control' + (' is-invalid' if field.errors else '')) }}
         {% endif %}
         {%- for error in field.errors %}
         <div class="invalid-feedback">{{ error }}</div>
@@ -53,17 +53,17 @@
     {{ form.hidden_tag() }}
     {%- for field, errors in form.errors.items() %}
         {%- if form[field].widget.input_type == 'hidden' %}
-            {%- for error in errors %}
-            <div class="invalid-feedback">{{ error }}</div>
-            {%- endfor %}
+        {%- for error in errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {%- endfor %}
         {%- endif %}
     {%- endfor %}
 
     {% set ns = namespace(first_field=true) %}
     {%- for field in form %}
         {% if field.widget.input_type != 'hidden' -%}
-            {{ form_field(field, ns.first_field) }}
-            {% set ns.first_field = false %}
+        {{ form_field(field, ns.first_field) }}
+        {% set ns.first_field = false %}
         {%- endif %}
     {%- endfor %}  
 </form>
