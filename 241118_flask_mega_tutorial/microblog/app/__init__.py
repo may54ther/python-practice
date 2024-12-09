@@ -1,7 +1,10 @@
-import os
 import logging
+import os
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
+import rq
+from config import Config
+from elasticsearch import Elasticsearch
 from flask import Flask, current_app, request
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
@@ -10,9 +13,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
-from elasticsearch import Elasticsearch
-
-from config import Config
+from redis import Redis
 
 
 def get_locale():
@@ -39,8 +40,13 @@ def create_app(config_class=Config):
     mail.init_app(app)
     moment.init_app(app)
     babel.init_app(app, locale_selector=get_locale)
-    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
-        if app.config['ELASTICSEARCH_URL'] else None
+    app.elasticsearch = (
+        Elasticsearch([app.config["ELASTICSEARCH_URL"]])
+        if app.config["ELASTICSEARCH_URL"]
+        else None
+    )
+    app.redis = Redis.from_url(app.config["REDIS_URL"])
+    app.task_queue = rq.Queue("microblog-tasks", connection=app.redis)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
@@ -55,38 +61,45 @@ def create_app(config_class=Config):
     app.register_blueprint(cli_bp)
 
     if not app.debug and not app.testing:
-        if app.config['MAIL_SERVER']:
+        if app.config["MAIL_SERVER"]:
             auth = None
-            if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-                auth = (app.config['MAIL_USERNAME'],
-                        app.config['MAIL_PASSWORD'])
+            if app.config["MAIL_USERNAME"] or app.config["MAIL_PASSWORD"]:
+                auth = (app.config["MAIL_USERNAME"], app.config["MAIL_PASSWORD"])
             secure = None
-            if app.config['MAIL_USE_TLS']:
+            if app.config["MAIL_USE_TLS"]:
                 secure = ()
             mail_handler = SMTPHandler(
-                mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-                fromaddr='no-reply@' + app.config['MAIL_SERVER'],
-                toaddrs=app.config['ADMINS'], subject='Microblog Failure',
-                credentials=auth, secure=secure)
+                mailhost=(app.config["MAIL_SERVER"], app.config["MAIL_PORT"]),
+                fromaddr="no-reply@" + app.config["MAIL_SERVER"],
+                toaddrs=app.config["ADMINS"],
+                subject="Microblog Failure",
+                credentials=auth,
+                secure=secure,
+            )
             mail_handler.setLevel(logging.ERROR)
             app.logger.addHandler(mail_handler)
 
-        if app.config['LOG_TO_STDOUT']:
+        if app.config["LOG_TO_STDOUT"]:
             stream_handler = logging.StreamHandler()
             stream_handler.setLevel(logging.INFO)
             app.logger.addHandler(stream_handler)
         else:
-            if not os.path.exists('logs'):
-                os.mkdir('logs')
-            file_handler = RotatingFileHandler('logs/microblog.log', maxBytes=10240, backupCount=10)
-            file_handler.setFormatter(logging.Formatter(
-                '%(asctime)s %(levelname)s: %(message)s '
-                '[in %(pathname)s:%(lineno)d]'))
+            if not os.path.exists("logs"):
+                os.mkdir("logs")
+            file_handler = RotatingFileHandler(
+                "logs/microblog.log", maxBytes=10240, backupCount=10
+            )
+            file_handler.setFormatter(
+                logging.Formatter(
+                    "%(asctime)s %(levelname)s: %(message)s "
+                    "[in %(pathname)s:%(lineno)d]"
+                )
+            )
             file_handler.setLevel(logging.INFO)
             app.logger.addHandler(file_handler)
 
         app.logger.setLevel(logging.INFO)
-        app.logger.info('Microblog startup')
+        app.logger.info("Microblog startup")
 
     return app
 

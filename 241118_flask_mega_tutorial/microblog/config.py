@@ -16,9 +16,10 @@ class Config:
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS") is not None
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    ADMINS = ["your-email@example.com"]
+    ADMINS = ["triptroop.official@gmail.com"]
     LANGUAGES = ["en", "ko", "ja"]
     POSTS_PER_PAGE = 10
-    MS_TRANSLATOR_KEY = os.environ.get("MS_TRANSLATOR_KEY")
     ELASTICSEARCH_URL = os.environ.get("ELASTICSEARCH_URL")
+    MS_TRANSLATOR_KEY = os.environ.get("MS_TRANSLATOR_KEY")
     LOG_TO_STDOUT = os.environ.get("LOG_TO_STDOUT")
+    REDIS_URL = os.environ.get("REDIS_URL") or "redis://"
