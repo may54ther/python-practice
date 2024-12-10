@@ -61,3 +61,36 @@ export MAIL_USE_TLS=1
 export MAIL_USERNAME={GMAIL_ID}@gmail.com
 export MAIL_PASSWORD={GMAIL_APP_PASSWORD}
 ```
+
+## 테스트
+
+### API 테스트
+
+-   `HTTPie` 설치
+
+```
+pip install httpie
+```
+
+-   공통
+
+```
+http -A bearer --auth <tokens> {HTTP_METHOD} http://localhost:5000/{API_ENDPOINT}
+```
+
+-   Auth
+
+    -   토큰 생성: `POST /tokens`
+        ```
+        http --auth <username>:<password> POST http://localhost:5000/api/tokens
+        ```
+    -   토큰 만료: `DELETE /tokens`
+
+-   User
+    -   회원 조회: `GET /users/:id`
+    -   회원 목록: `GET /users`
+    -   회원 등록: `POST /users`
+    -   회원 수정: `PUT /users/:id`
+-   Follow
+    -   팔로워 목록: `GET /users/:id/followers`
+    -   팔로잉 목록: `GET /users/:id/following`
